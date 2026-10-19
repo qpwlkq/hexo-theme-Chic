@@ -32,7 +32,7 @@ async function buildSite(base, options = {}) {
             description: '劝君莫惜金缕衣, 劝君惜取少年时。<br>有花堪折直须折, 莫待无花空折枝。',
             avatar: 'https://qpwlkq.github.io/image/avatar.jpg',
             links_text_enable: !options.originalProfile, links_icon_enable: !!options.originalProfile,
-            links: { Github: 'https://github.com/qpwlkq' },
+            links: { Github: 'https://github.com/qpwlkq', ZhiHu: false },
             home_posts: { enable: options.homePosts !== false, excerpt_length: 100 }
         }
     };

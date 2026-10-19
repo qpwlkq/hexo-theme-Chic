@@ -36,6 +36,7 @@ test('builds five newest published posts, separate works, and all original route
     assert(!home('.home-post p').text().includes('hiddenScript'));
     assert.equal(home('.home-post p').first().text(), '正文 摘要 & <script>。');
     assert.equal(home('.profile-container .nickname').text(), 'Qin Peng');
+    assert.equal(home('.links a[title=ZhiHu]').length, 0);
     const works = await read('works/index.html');
     assert.deepEqual(works('.portfolio-item h3').map((_, el) => works(el).text()).get(), ['新作品 <script>', '旧作品']);
     assert.equal(works('.portfolio-item script').length, 0);
