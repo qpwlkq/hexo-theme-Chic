@@ -1,23 +1,74 @@
 .post-wrap
-  .categories-card
+  .category-tree
     margin 0 auto
     margin-top 1em
-    display flex
-    align-items center
-    justify-content space-between
-    flex-direction row
-    flex-wrap wrap
     padding 0 2.5em
-    line-height 1.6em
-    .card-item
-      font-size 14px
-      text-align left
-      width 45%
-      display flex
-      align-items flex-start
-      margin-top 2em
-      min-height 16em
-      padding 0 2%
-      position relative
-      .categories
-        overflow hidden
+    line-height 1.8em
+    font-size 15px
+    .cat-list
+      list-style none
+      margin 0
+      padding 0
+      .cat-item
+        margin 0
+        .cat-row
+          display flex
+          align-items center
+          padding 4px 0
+          cursor default
+          &:hover .cat-name
+            color $light-post-link-hover-color
+          .cat-toggle
+            display inline-flex
+            align-items center
+            justify-content center
+            width 1.2em
+            flex-shrink 0
+            cursor pointer
+            color $light-font-secondary-color
+            font-size 0.75em
+            user-select none
+            &:hover
+              color $light-global-link-color
+          .cat-leaf
+            display inline-block
+            width 1.2em
+            flex-shrink 0
+          .cat-icon
+            font-size 14px
+            margin-right 6px
+            color $light-font-secondary-color
+          .cat-name
+            color $light-global-link-color
+            text-decoration none
+            flex 1
+            &:hover
+              color $light-post-link-hover-color
+          .cat-count
+            font-size 12px
+            color $light-font-secondary-color
+            margin-left 8px
+        .cat-children
+          padding-left 1.6em
+          border-left 1px dashed $light-border-color
+          margin-left 0.55em
+
+.dark-theme .post-wrap
+  .category-tree
+    .cat-list
+      .cat-item
+        .cat-row
+          .cat-toggle
+            color $dark-font-secondary-color
+            &:hover
+              color $dark-global-link-hover-color
+          .cat-icon
+            color $dark-font-secondary-color
+          .cat-name
+            color $dark-global-link-color
+            &:hover
+              color $dark-post-link-hover-color
+          .cat-count
+            color $dark-font-secondary-color
+        .cat-children
+          border-left-color $dark-border-color

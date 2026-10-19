@@ -27,34 +27,61 @@ how to add a category page:
     <div class="container">
         <div class="post-wrap categories">
             <h2 class="post-title">-&nbsp;Categories&nbsp;-</h2>
-            <div class="categories-card">
-                <% site.categories.forEach(category_item=>{ %>
-                    <%# console.log("hehe") %>
-                    <div class="card-item">
-                        <div class="categories">
-                            <a href="<%- url_for(category_item.path) %>">
-                                <h3>
-                                    <i class="iconfont icon-category" style="padding-right:3px"></i>
-                                    <%- category_item.name %>
-                                </h3>
-                            </a>
-                            <% category_item.posts.forEach((post_item, index = 0)=>{ %>
-                                <%# console.log(index) %>
-                                <% if(++index <= 5){ %>
-                                    <article class="archive-item">
-                                        <a class="archive-item-link"
-                                           href="<%- url_for(post_item.path) %>"><%- post_item.title %></a>
-                                    </article>
-                                <% } %>
-                            <% }) %>
-                            <% if(category_item.posts.length > 5){ %>
-                                <a class="more-post-link" href="<%- url_for(category_item.path) %>">More >></a>
-                            <% } %>
-                        </div>
-                    </div>
-                <% }) %>
-            </div>
+            <div class="category-tree">
+                <%
+                const allCats = site.categories.toArray();
+                const visited = new Set();
 
+                function renderCategoryTree(parentId) {
+                    const children = allCats.filter(c =>
+                        parentId === undefined ? !c.parent : c.parent === parentId
+                    ).filter(c => !visited.has(c._id || c.id));
+                    if (children.length === 0) return '';
+
+                    let html = '<ul class="cat-list">';
+                    children.forEach(cat => {
+                        visited.add(cat._id || cat.id);
+                        const childHtml = renderCategoryTree(cat._id || cat.id);
+                        const hasChildren = childHtml !== '';
+                        html += '<li class="cat-item">';
+                        html += '<div class="cat-row">';
+                        if (hasChildren) {
+                            html += '<span class="cat-toggle" data-expanded="true">&#9660;</span>';
+                        } else {
+                            html += '<span class="cat-leaf"></span>';
+                        }
+                        html += '<i class="iconfont icon-category cat-icon"></i>';
+                        html += '<a class="cat-name" href="' + escape_html(url_for(cat.path)) + '">' + escape_html(cat.name) + '</a>';
+                        html += '<span class="cat-count">' + cat.posts.length + '</span>';
+                        html += '</div>';
+                        if (hasChildren) {
+                            html += '<div class="cat-children">' + childHtml + '</div>';
+                        }
+                        html += '</li>';
+                    });
+                    html += '</ul>';
+                    return html;
+                }
+                %>
+                <%- renderCategoryTree(undefined) %>
+            </div>
         </div>
     </div>
+    <script>
+    document.querySelectorAll('.cat-toggle').forEach(function(toggle) {
+        toggle.addEventListener('click', function() {
+            const expanded = this.dataset.expanded === 'true';
+            const children = this.closest('.cat-row').nextElementSibling;
+            if (expanded) {
+                this.innerHTML = '&#9654;';
+                this.dataset.expanded = 'false';
+                children.style.display = 'none';
+            } else {
+                this.innerHTML = '&#9660;';
+                this.dataset.expanded = 'true';
+                children.style.display = '';
+            }
+        });
+    });
+    </script>
 <% } %>

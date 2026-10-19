@@ -57,6 +57,9 @@ test('builds five newest published posts, separate works, and all original route
         assert(page('title').text().length > 0, route);
         assert(!page('.archive-item').text().includes('新作品'), route);
     }
+    const categories = await read('category/index.html');
+    assert.equal(categories('.category-tree .cat-name').text(), '测试分类');
+    assert(categories('.cat-name').attr('href').startsWith('/categories/'));
     const continuation = await read('page/2/index.html');
     assert.equal(continuation('.home-posts').length, 0);
     assert(continuation('.archive-item').length > 0);
