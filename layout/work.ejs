@@ -1,0 +1,13 @@
+<div class="portfolio-wrap">
+    <a class="portfolio-back" href="<%= url_for('/works/') %>">← <%= __('back_to_works') %></a>
+    <article class="portfolio-detail">
+        <header class="portfolio-heading">
+            <h1><%= page.title %></h1>
+            <div class="portfolio-meta">
+                <time datetime="<%= date_xml(page.date) %>"><%= date(page.date, 'YYYY.MM.DD') %></time>
+                <% if (page.status) { %><span> · <%= page.status %></span><% } %>
+            </div>
+        </header>
+        <section class="post-content"><%- page.content %></section>
+    </article>
+</div>

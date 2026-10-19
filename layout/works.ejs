@@ -1,0 +1,27 @@
+<% var entries = chic_works(); var workOptions = theme.works || {}; %>
+<div class="portfolio-wrap">
+    <header class="portfolio-heading">
+        <h1><%= page.title || workOptions.title || __('works') %></h1>
+        <% if (workOptions.description) { %><p><%= workOptions.description %></p><% } %>
+    </header>
+    <% if (entries.length) { %>
+    <section class="portfolio-list" aria-label="<%= __('works') %>">
+        <% var lastYear = ''; entries.each(function (work) { %>
+            <% var year = date(work.date, 'YYYY'); %>
+            <% if (year !== lastYear) { lastYear = year; %>
+            <h2 class="portfolio-year"><%= year %></h2>
+            <% } %>
+            <article class="portfolio-item">
+                <div>
+                    <h3><a href="<%= url_for(work.path) %>"><%= work.title %></a></h3>
+                    <% var summary = chic_summary_html(work); %>
+                    <% if (summary) { %><p><%- summary %></p><% } %>
+                </div>
+                <time datetime="<%= date_xml(work.date) %>"><%= date(work.date, 'YYYY.MM.DD') %></time>
+            </article>
+        <% }); %>
+    </section>
+    <% } else { %>
+    <p class="portfolio-empty"><%= __('works_empty') %></p>
+    <% } %>
+</div>

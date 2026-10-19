@@ -1,3 +1,5 @@
+> Qin Peng 的自定义版本：保留 Chic 首屏布局，增加最近五篇文章、独立作品页和圆角下滑箭头。基于 [Siricee/hexo-theme-Chic](https://github.com/Siricee/hexo-theme-Chic) 修改。
+
 <h1 align="center"><a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic Theme</a></h1>
 
 <p align="center">
@@ -58,7 +60,7 @@
 
 ```bash
 cd your-blog/themes
-git clone https://github.com/Siricee/hexo-theme-Chic.git Chic
+git clone https://github.com/qpwlkq/hexo-theme-Chic.git Chic
 // Modify theme setting in _config.yml to Chic.
 ```
 
@@ -206,6 +208,63 @@ layout: tag
 ```
 
 4. category 页面同理，layout 字段键值为 category。 <br>
+
+### 首页最近文章与个人作品
+
+此分支保留原头像、昵称、介绍和原有归档、分类、标签、关于页。首页个人介绍下方直接展示最近 **5 篇已发布文章**，按发布日期倒序排列，没有“最近文章”标题和“查看全部”按钮。桌面日期靠左，手机日期放在摘要下方；文章不足五篇时显示实际数量。归档页继续展示全部博客文章。
+
+摘要依次使用文章的 `description`、`excerpt` 或正文，去除 HTML 和代码块后截取文本。可在博客根目录的 `_config.Chic.yml` 中设置（文件名中的 `Chic` 应与主题目录名称一致）：
+
+```yaml
+home_posts:
+  enable: true
+  excerpt_length: 120
+works:
+  title: 个人作品
+  description: 项目、工具与动手实践。
+```
+
+设置 `home_posts.enable: false` 可以恢复仅展示个人介绍的首页。
+
+#### 添加作品
+
+主题自动生成 `/works/` 列表。每篇作品是独立的 Markdown **页面**，不放在 `_posts`，也不占首页五篇文章的名额。新建博客文件 `source/works/my-project/index.md`：
+
+```markdown
+---
+layout: work
+title: 我的项目
+date: 2026-10-19 10:00:00
+description: 用一两句话介绍项目。
+status: 进行中
+---
+
+## 项目介绍
+
+这里可以像写文章一样添加文字、图片、代码和演示链接。
+```
+
+保存后运行 `hexo clean && hexo generate`，作品出现在按年份分组、按日期倒序的列表中。点击标题进入详情，详情顶部可以返回作品列表。`status` 可省略。未准备发布的作品请先保存在 `source` 目录之外；作品采用 Hexo 页面机制。
+
+没有作品时展示“暂无作品”，主题不附带虚构项目。若需要自定义列表页标题，可新建 `source/works/index.md` 并指定 `layout: works`；主题不会重复生成同一路径。可直接复制主题的 `examples/work.md` 作为作品起点。
+
+导航默认保留 `Posts`、`Categories`、`Tags`、`About` 并增加 `Works: /works/`。如果你的站点覆盖了完整的 `nav` 配置，请在保留旧项目的基础上补上该入口。现有的 `source/tag/index.md`（`layout: tag`）、`source/category/index.md`（`layout: category`）及 `source/about/index.md` 应继续保留。所有主题内部链接通过 Hexo 的根路径处理，支持 GitHub Pages 项目子目录。
+
+#### 本地验证
+
+本分支开发测试使用 Node.js 20.19+ 与 Hexo 8。仅使用主题无需安装测试依赖；继续使用博客原有 Hexo 依赖即可。
+
+```bash
+# 在主题目录执行
+npm ci
+npm test
+npm run preview:build
+python3 -m http.server 56089 --bind 127.0.0.1 --directory .preview-site/public
+```
+
+访问 `http://127.0.0.1:56089/` 查看由真正的主题模板生成的验收站点。示例正文、分类、标签和作品只用于验证，不是完整旧博客迁移。预览目录会在每次 `preview:build` 时重新生成，不要在其中维护正式内容。
+
+依赖检查（2026-10-19）：开发验收环境的 `npm audit` 仍报告 11 项上游依赖告警（2 项中等、8 项高危、1 项严重），涉及 Hexo 及其传递依赖。已尝试常规 `npm audit fix`，未使用强制版本替换。这些是本地生成/测试工具的依赖，不会随静态页面作为浏览器脚本发布；正式构建环境仍需跟进上游修复。
 
 ### 开启 MathJax 支持（数学公式）
 

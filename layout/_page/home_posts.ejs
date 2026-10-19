@@ -1,0 +1,16 @@
+<% var recentPosts = chic_recent_posts(); %>
+<% if (recentPosts.length) { %>
+<section id="home-posts" tabindex="-1" class="home-posts" aria-label="<%= __('recent_posts') %>">
+    <% recentPosts.each(function (post) { %>
+    <article class="home-post">
+        <time class="home-post-date" datetime="<%= date_xml(post.date) %>"><%= date(post.date, 'YYYY.MM.DD') %></time>
+        <div class="home-post-copy">
+            <h2><a href="<%= url_for(post.path) %>"><%= post.title %></a></h2>
+            <% var summary = chic_summary_html(post); %>
+            <% if (summary) { %><p><%- summary %></p><% } %>
+        </div>
+        <span class="home-post-arrow" aria-hidden="true">↗</span>
+    </article>
+    <% }); %>
+</section>
+<% } %>

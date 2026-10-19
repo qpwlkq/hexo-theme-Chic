@@ -1,3 +1,20 @@
-<% if(is_home()) {%>
-    <%- partial('_page/profile') %>
-<%}%>
+<% if (is_home() && (!page.current || page.current === 1)) { %>
+    <% var showHomePosts = !theme.home_posts || theme.home_posts.enable !== false; %>
+    <div class="home<%= showHomePosts ? ' home-with-posts' : '' %>">
+        <% if (showHomePosts && chic_recent_posts().length) { %>
+        <div class="home-hero">
+            <%- partial('_page/profile') %>
+            <a class="scroll-cue" href="#home-posts" aria-label="<%= __('scroll_to_explore') %>"><svg class="scroll-cue-arrow" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5l0 14"/><path d="M18 13l-6 6"/><path d="M6 13l6 6"/></svg></a>
+        </div>
+        <link rel="stylesheet" href="<%= url_for('/css/scroll-cue.css') %>">
+        <script defer src="<%= url_for('/js/scroll-cue.js') %>"></script>
+        <% } else { %>
+            <%- partial('_page/profile') %>
+        <% } %>
+        <% if (showHomePosts) { %>
+            <%- partial('_page/home_posts') %>
+        <% } %>
+    </div>
+<% } else if (is_home()) { %>
+    <%- partial('_page/archive') %>
+<% } %>

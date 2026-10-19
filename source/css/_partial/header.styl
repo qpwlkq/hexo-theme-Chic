@@ -13,4 +13,14 @@ header
     label
       margin-left 15px
       position relative
-    
+    a.active
+      color $light-global-link-hover-color
+      .dark-theme &
+        color $dark-global-link-hover-color
+    a:focus-visible
+      outline 2px solid $light-global-link-hover-color
+      outline-offset 4px
+  .menu-toggle:focus-visible
+    outline 2px solid $light-global-link-hover-color
+    outline-offset 4px
+

@@ -6,7 +6,18 @@ nav:
   Posts: /archives
   Categories: /category
   Tags: /tag
+  Works: /works/
   About: /about
+
+# Home: five latest posts, with no section heading or extra button.
+home_posts:
+  enable: true
+  excerpt_length: 120
+
+# Independent portfolio. Write each entry as a page with `layout: work`.
+works:
+  title: 个人作品
+  description: 项目、工具与动手实践。
 
 # favicon
 favicon: /favicon.ico

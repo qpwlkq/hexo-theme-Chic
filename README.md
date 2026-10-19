@@ -1,3 +1,5 @@
+> Qin Peng’s custom fork: original Chic profile layout, five recent posts, independent portfolio pages, and a rounded scroll cue. Based on [Siricee/hexo-theme-Chic](https://github.com/Siricee/hexo-theme-Chic).
+
 <h1 align="center"><a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic Theme</a></h1>
 
 <p align="center">
@@ -61,7 +63,7 @@ An elegant, powerful, easy-to-read Hexo theme.
 
 ```bash
 cd your-blog/themes
-git clone https://github.com/Siricee/hexo-theme-Chic.git Chic
+git clone https://github.com/qpwlkq/hexo-theme-Chic.git Chic
 # Modify theme setting in _config.yml to Chic.
 ```
 
@@ -202,6 +204,20 @@ layout: tag
 ---
 ```
 4. Do so with the category page with `Category` as title and `category` as layout.
+
+### Homepage posts and portfolio
+
+The homepage preserves the existing profile and displays the five newest published blog posts below it, without a section heading or extra button. Dates sit beside the text on desktop and below the excerpt on mobile. Archives, categories, tags and About remain available.
+
+`home_posts.enable` defaults to `true`; set it to `false` to restore a profile-only homepage. `home_posts.excerpt_length` defaults to 120. Summaries use `description`, then `excerpt`, then text from the post body. Code blocks are omitted.
+
+A `/works/` index is generated automatically. Add individual Markdown pages at `source/works/<slug>/index.md` using `layout: work`, `title`, `date`, optional `description` and optional `status`. See [examples/work.md](examples/work.md). Works are sorted newest first and grouped by year. They are separate pages, so they do not enter blog archives, categories, tags or the five homepage posts. Keep unpublished work outside `source` until ready to publish.
+
+Customize `works.title` and `works.description` through your theme configuration. An authored `source/works/index.md` with `layout: works` takes precedence over the generated index. The empty state contains no fabricated projects.
+
+The default navigation adds `Works: /works/` while preserving all existing destinations. If your site overrides `nav`, add this entry to that configuration. Keep your existing `tag`, `category` and `about` source pages. Internal links respect Hexo's configured root, including GitHub Pages project subdirectories.
+
+Development verification (Node.js 20.19+, Hexo 8): run `npm ci`, `npm test` and `npm run preview:build` in this theme directory. Serve `.preview-site/public` locally. The generated preview uses sample content, is rebuilt from scratch, and must not be used to author production posts. Test dependencies are not required to use the theme in an existing Hexo blog.
 
 ### MathJax (Render LaTeX formula)
 

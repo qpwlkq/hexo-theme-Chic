@@ -1,0 +1,74 @@
+.portfolio-wrap
+  width calc(100% - 48px)
+  max-width 780px
+  margin 64px auto 80px
+
+.portfolio-heading
+  margin-bottom 32px
+  h1
+    margin 0 0 16px
+    font-size 30px
+    line-height 1.4
+    font-weight 500
+    overflow-wrap anywhere
+  p
+    margin 0
+
+.portfolio-heading p, .portfolio-item p, .portfolio-meta, .portfolio-back, .portfolio-empty
+  color #73716d
+  font-size 14px
+  .dark-theme &
+    color #b2b1ad
+
+.portfolio-year
+  font-size 21px
+  font-weight 500
+  margin 28px 0 20px
+
+.portfolio-item
+  display flex
+  align-items baseline
+  justify-content space-between
+  gap 28px
+  padding 24px 0
+  border-top 1px solid $light-border-color
+  .dark-theme &
+    border-color #45464a
+  h3
+    font-size 18px
+    font-weight 500
+    line-height 1.6
+    margin 0 0 7px
+    overflow-wrap anywhere
+  p
+    margin 0
+    line-height 1.85
+    overflow-wrap anywhere
+  time
+    white-space nowrap
+    font-size 13px
+    color #73716d
+    .dark-theme &
+      color #b2b1ad
+
+.portfolio-back
+  display inline-block
+  margin-bottom 28px
+
+.portfolio-wrap a:focus-visible
+  outline 2px solid $light-global-link-hover-color
+  outline-offset 5px
+
+.portfolio-detail .post-content
+  padding-top 0
+  overflow-wrap anywhere
+
+@media screen and (max-width: 620px)
+  .portfolio-wrap
+    width calc(100% - 40px)
+    margin 36px auto 56px
+  .portfolio-heading h1
+    font-size 27px
+  .portfolio-item
+    flex-direction column
+    gap 12px
